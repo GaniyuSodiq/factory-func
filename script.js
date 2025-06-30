@@ -35,3 +35,27 @@ const sodiq = personFactory("Sodiq", 27)
 sodiq.sayName() // Hello
 
 console.log(sodiq.age) // 27
+
+
+// LEST SAY WE ARE TASKED TO LOG ALL THESE VALUES TO THE CONSOLE
+const name = "Maynard"
+const color = "red"
+const number = 13
+const food = "rice"
+
+// we can console.log each one
+console.log(name)
+console.log(color)
+console.log(number)
+console.log(food)
+// BUT THIS IS REPETITIVE AND SHOWS NO CLEAR CONNECTION BTW THE VALUES
+
+
+// we can have all values in a single console log separated by comma
+console.log(name, color, number, food)
+// NOW WE LOG ALL VALUES ON THE SAME LINE BT IT IS STILL ABIT DISOGANIZED
+
+
+// what if we wrap all the values in curly brases like in our factory func return statement
+console.log({name, color, number, food})  // {name: 'Maynard', color: 'red', number: 13, food: 'rice'}
+// NOW WE SEE KEY VALUE PAIRS ALL WITHIN OUR CURLY BRASES WITHIN OUR OBJ AND ALL VERY MEANINGFUL
