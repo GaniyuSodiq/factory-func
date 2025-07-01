@@ -76,7 +76,7 @@ const func = x => {
 func(99)
 console.log(a) // 99
 
-// 2 another example
+// ⭐2 another example
 
 // WE DEFINE 2 OTHER FUNCTION IN OUR FACTORY FUNCTION
 const FactoryFunction = string => {
@@ -98,7 +98,7 @@ taco.printString() // bcs we returned printString ✅
 // even if thry get called outside of that function
 
 
-// 3 another example of closure
+// ⭐3 another example of closure
 
 
 const counterCreator = () => {
@@ -131,6 +131,8 @@ counter() // 3
 // makes the code easiear to refactor and test
 // and easier to understand how to use obj in your code
 
+// ⭐4 another example
+
 const Player = (name, level) => {
     let health = level * 2;
     const getName = () => name;
@@ -147,11 +149,88 @@ const Player = (name, level) => {
     const attack = enemy => {
         if (enemy.getLevel() > level) {
             damage(1);
-            console.log(enemy.getName() + "has damaged " + name)
+            console.log(enemy.getName() + " has damaged " + name)
         }
         if (enemy.getLevel() < level) {
             enemy.damage(1);
-            console.log(name + "has damaged " + enemy.getName())
+            console.log(name + " has damaged " + enemy.getName())
         }
     }
+    return { attack, damage, getName, getLevel }
 }
+
+const jimmie = Player("Jim", 10)
+const badGuy = Player("Jeff", 5)
+
+jimmie.attack(badGuy)
+// health++ // this is not exported publicly from the person function
+// jimmy.die() // this is not exported publicly from the person function
+
+// Creating and setting obj this way makes them easiear to use
+// bcs we have encapsulated it and we can only access it by exporting a function
+
+// ⭐5 another example
+// in constructor, there is the concept of prototypial inheritance
+// meaning giving our obj access to the methods and properties of other objects
+
+// the cool thing here is that...
+// ...we can be selective in what function we include in our new obj using Object.assign()
+// we can select some of the obj or all of them
+const Persona = name => {
+    const sayName = () => console.log(`my name is ${name}`)
+    return { sayName }
+}
+
+const Nerd = name => {
+    const sayName = Persona(name)
+    const doSomethingNerdy = () => console.log(`${name} doing something nerdy`)
+    return { sayName, doSomethingNerdy }
+}
+
+const Jeffo = Nerd("Jeffo")
+
+// Jeffo.sayName() NOT A FUNCTION
+Jeffo.sayName.sayName()
+Jeffo.doSomethingNerdy()
+
+const Nerd2 = name => {
+    const prototype = Persona(name)
+    const doSomethingNerdy = () => console.log(`${name} doing something Nerdy`)
+    return Object.assign({}, prototype, { doSomethingNerdy })
+    // Object.assign() will copy all the properties ie prototype, {doSomethingNerdy}
+    // ... from one or more source objects to a target Obj {}
+    // ... and return the target obj
+    // {doSomethingNerdy} here is for us to have {doSomethingNerdy: doSomethingNerdy} returned
+    // instead of returning doSomethingNerdy
+}
+
+const stevo = Nerd2("Stevo")
+stevo.doSomethingNerdy()
+stevo.sayName()
+
+
+// ⭐6 another example MODULES 
+// similar to factory function
+
+// Module's concept is same as factory function
+//bt instead of creating factory function to use over and over...
+// ... the module pattern will wrap the factory function in an IIFE
+// IIFE: Immediately Invoked Function Expression
+const calculator = (() => {
+    const add = (a, b) => a + b;
+    const sub = (a, b) => a - b;
+    const mul = (a, b) => a * b;
+    const div = (a, b) => a / b;
+    return { add, sub, mul, div }
+})();
+// const calculator = ()()  
+// the second bracket means the function in the first bracket is immediately called
+// the function in our IIFE is a simple factory function
+// we can assign the obj to a variable and bcs we only need one variable here, calculator
+// the one variable is given the return of everuthing in our factory function: return { add, sub, mul, div }
+// the private functions add(), sub(), mul(), div()
+// are only available in this module
+// we use calculator. to pick the one we need at any point in our program
+
+calculator.add(2, 3)
+calculator.mul(14, 5534)
