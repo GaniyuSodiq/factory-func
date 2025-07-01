@@ -234,3 +234,35 @@ const calculator = (() => {
 
 calculator.add(2, 3)
 calculator.mul(14, 5534)
+
+
+// ⭐ DECONSTRUCTURING
+let y, z, rest;
+
+[y, z] = [10, 20];
+
+console.log(y);
+// Expected output: 10
+
+console.log(z);
+// Expected output: 20
+
+[y, z, ...rest] = [10, 20, 30, 40, 50];
+
+console.log(rest);
+// Expected output: Array [30, 40, 50]
+
+
+// The destructuring uses similar syntax but uses it on the left-hand side of the assignment instead. 
+// It performs the reverse operation of an array declaration, 
+// by declaring each element in the collection as a separate variable.
+// FOR ARRAY
+// const obj = { a, b, c };
+// const { a, b, c } = obj;
+// // Equivalent to:
+// // const a = obj.a, b = obj.b, c = obj.c;
+
+// const obj = { prop1: x, prop2: y, prop3: z };
+// const { prop1: x, prop2: y, prop3: z } = obj;
+// // Equivalent to:
+// // const x = obj.prop1, y = obj.prop2, z = obj.prop3;
