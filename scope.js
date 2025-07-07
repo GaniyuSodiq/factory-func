@@ -3,22 +3,22 @@
 // let second = 'bos'; // not attached to window obl ie window.second = undefined
 // var age = 100; // attached to window obl ie window.age = 100
 
-// function sayHi(){
-//     console.log('Say Hi')
-// }
+function sayHi(){
+    console.log('Say Hi')
+}
 // sayHi() // Say Hi
 // window.sayHi() // Say Hi
 // // anything that is in the global scope is attached to the 
 // // window object with the exception of const and let variables.
 
-// const age = 100;
+const age = 100;
 
-// function go() {
-//   const age = 200;
-//   const hair = 'blonde';
-//   console.log(age);
-//   console.log(hair);
-// }
+function go() {
+  const age = 200;
+  const hair = 'blonde';
+  console.log(age);
+  console.log(hair);
+}
 // In the example above 👆, if we wanted to access the age = 100; from the go() function, there is no way to do that because the variable has been shadowed (meaning it has been over-written).
 // A tip is that if you ever have a variable inside of a function that is very similar to a variable outside of a function, name the variable inside of the function more specifically so you have access to both.
 // In this case, inside of the function you could declare a variable like const myAge = 200; instead of just calling it age.
