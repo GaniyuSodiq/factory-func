@@ -62,3 +62,15 @@ console.log(soccerGame()) // Soccer 2
 // Closures are the ability of a child function, or an inner function, 
 // to access variables from a higher level scope even after the functions 
 // have been called or closed or closed over.
+
+
+
+// ⭐⭐⭐ CLOSURE EXPLAINED IN ANOTHER WAY ⭐⭐⭐
+
+// CLOSURE is a function with preserved data.
+// gives you access to an outer function scope from an inner function
+// BENEFITS OF CLOSUE:
+// State of variables in outer scope are 'saved'
+// Variables in outer scopre are considered 'private'
+
+// as an example, lets pretent we are playing a game.
