@@ -74,3 +74,20 @@ console.log(soccerGame()) // Soccer 2
 // Variables in outer scopre are considered 'private'
 
 // as an example, lets pretent we are playing a game.
+
+// global varaibale
+let points = 0;
+
+// function stored in a variable called 'score'
+let score = function(){
+
+    return points += 1
+}
+
+// so increament our points, we just need to invoke score
+console.log(score()) // 1
+console.log(score()) // 2
+console.log(score()) // 3
+
+// but there is a problem with this way. Since 'points' is a global variable, 
+// someobody writing malicious code can actually change it.
