@@ -18,7 +18,7 @@
 // const innerFn = outer()
 // innerFn()
 
-function createGreeting  (greeting = "") {
+function createGreeting(greeting = "") {
     const myGreet = greeting.toUpperCase()
     return function (name) {
         return `${myGreet} ${name}`
@@ -37,10 +37,10 @@ console.log(sayHello("Sodiq"))
 
 
 // PRIVATE VARIABLES
-function createGame(name){
+function createGame(name) {
     let score = 0;
-    return function win(){
-        score ++
+    return function win() {
+        score++
         return `${name} ${score}`
     }
 }
@@ -99,16 +99,54 @@ console.log(soccerGame()) // Soccer 2
 
 // one way we can prevent this is to place our points variable with the function
 // so that 'points' will be a local variable and not a global variable
-let score = function(){
-    let points = 0;
-    return points += 1
-}
+// let score = function(){
+//     let points = 0;
+//     return points += 1
+// }
 // so 'points' is now effectively private and you can access it from outside the function
 
-console.log(score()) // 1
-console.log(score()) // 1
-console.log(score()) // 1
+// console.log(score()) // 1
+// console.log(score()) // 1
+// console.log(score()) // 1
 
 // Now we have another problem, the value stored within 'points' is not being saved
 // everyting we invoke score, we are effectly reseting our points to zero
 // then increamenting it so our output remains 1 everytime.
+// so how can we solve this? use Closure
+
+
+// One we we can save the data stored within a unction is to create a CLOSURE
+// remember from our definition: closure is a function with preserved data
+// here is how we can use closure in our points and score example
+
+// we will retun an inner anonymous function
+// that does the increament and return points
+let score = function () {
+    let points = 0;
+    return function () {
+        points += 1
+        return points
+    }
+
+}(); 
+// we can invoke our score function immediately by adding () after its closing declaration curly brace here
+// not only is our value saved within our variable
+// also we cannot access points outside our function
+// bcs it is effectively 'private'. this adds a layer of security 
+
+// KEY POINT TO REMEMBER
+// THINGS ON THE INSIDE USUSLLAY HAVE ACCESS TO THINGS ON THE OUTSIDE
+// ANYTHING IN THE CURLY BRACES IN OUR OUTER FUNCT IS CONSIDERED LEXECAL SCOPE
+
+console.log(score()) // 1
+console.log(score()) // 2
+console.log(score()) // 3
+
+// so calling outer function immediately gives us 
+// score = function () {
+//     points += 1
+//     return points
+// }
+// with saved 'let points = 0;' in the outer function we called immediately
+// so invoking score in the console logs just keeps increamenting and returning points
+
