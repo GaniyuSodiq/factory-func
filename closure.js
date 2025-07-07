@@ -76,18 +76,39 @@ console.log(soccerGame()) // Soccer 2
 // as an example, lets pretent we are playing a game.
 
 // global varaibale
-let points = 0;
+// let points = 0;
 
 // function stored in a variable called 'score'
-let score = function(){
+// let score = function(){
 
-    return points += 1
-}
+//     return points += 1
+// }
 
 // so increament our points, we just need to invoke score
-console.log(score()) // 1
-console.log(score()) // 2
-console.log(score()) // 3
+// console.log(score()) // 1
+// console.log(score()) // 2
+// console.log(score()) // 3
 
 // but there is a problem with this way. Since 'points' is a global variable, 
 // someobody writing malicious code can actually change it.
+
+// lest say somebody is cheating and they give themselve 100 points
+// points += 100
+// console.log(score()) // 104
+
+
+// one way we can prevent this is to place our points variable with the function
+// so that 'points' will be a local variable and not a global variable
+let score = function(){
+    let points = 0;
+    return points += 1
+}
+// so 'points' is now effectively private and you can access it from outside the function
+
+console.log(score()) // 1
+console.log(score()) // 1
+console.log(score()) // 1
+
+// Now we have another problem, the value stored within 'points' is not being saved
+// everyting we invoke score, we are effectly reseting our points to zero
+// then increamenting it so our output remains 1 everytime.
