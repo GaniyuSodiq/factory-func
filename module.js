@@ -46,6 +46,12 @@
 // // you should use methods that are provided for you
 // // in revealing module pattern we can hide away some of the  
 
+// trying to implement the jquery code in vanilla js
+// THE PLAN IS TO CREATE A TODO LIST OF NAMES
+// THE NAME IS PUT INTO ARRAY
+// THEN RENDER FROM THE ARRAY
+// DELETE REMOVES FROM THE ARRAY AND RE-RENDER ARRAY
+
 const people = []
 
 const inputEl = document.querySelector("input")
@@ -53,11 +59,22 @@ const buttonEl = document.querySelector("button")
 const ulEl = document.querySelector("ul")
 
 buttonEl.addEventListener('click', function(){
+    // PUT NAME INTO THE ARRAY
     people.push(inputEl.value)
     inputEl.value = ""
-    const personEl = document.createElement("li")
-    // personEl.textContent = inputEl.value
-    // 
-    // ulEl.appendChild(personEl)
+
+    // RENDER THE ARRAY
+    ulEl.textContent = ""
+    people.forEach(function(item){
+        const personEl = document.createElement("li")
+        const nameEl = document.createElement("span")
+        const delEl = document.createElement("span")
+        nameEl.textContent = item
+        delEl.textContent = "❌"
+        personEl.appendChild(nameEl)
+        personEl.appendChild(delEl)
+        ulEl.appendChild(personEl)
+    })
+
 })
 
