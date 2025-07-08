@@ -5,11 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="module.js" defer></script>
+    <style>
+        body{
+            text-align: center;
+        }
+        #hero-unit{
+            display: inline-block;
+            background-color: aliceblue;
+            border-radius: 5px;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        <p>JS</p>
-        <P>Tutorials</P>
+    <div id="hero-unit">
+        <h1>JS <br>Tutorial</h1>
+    </div>
+    <div id="peopleModule">
+        <h1>People</h1>
+        <input type="text" placeholder="name">
+        <button id="addPerson">Add person</button>
+        <ul id="person"></ul>
     </div>
 </body>
 </html>
