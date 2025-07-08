@@ -19,4 +19,7 @@
 //     });
 // });
 
-
+$(".recent").click(function(){
+    $(".recent").removeClass("active")
+    $(this).addClass("active")
+})
