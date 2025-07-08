@@ -46,14 +46,18 @@
 // // you should use methods that are provided for you
 // // in revealing module pattern we can hide away some of the  
 
+const people = []
+
 const inputEl = document.querySelector("input")
 const buttonEl = document.querySelector("button")
 const ulEl = document.querySelector("ul")
 
 buttonEl.addEventListener('click', function(){
-    const personEl = document.createElement("li")
-    personEl.textContent = inputEl.value
+    people.push(inputEl.value)
     inputEl.value = ""
-    ulEl.appendChild(personEl)
+    const personEl = document.createElement("li")
+    // personEl.textContent = inputEl.value
+    // 
+    // ulEl.appendChild(personEl)
 })
 
