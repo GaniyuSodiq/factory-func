@@ -54,9 +54,17 @@
 
 // const people = []
 
-// const inputEl = document.querySelector("input")
-// const buttonEl = document.querySelector("button")
-// const ulEl = document.querySelector("ul")
+// // this is my normal way of getting html tag, however this queries the DOM each time for each variable
+// // so the tutor gets just the parent of this elements, to optimize performance ()
+// // then gets all the other elemets from the parent, so it looks like below
+// const peopleModule = document.querySelector("#peopleModule")
+// const inputEl = peopleModule.querySelector("input")
+// const buttonEl = peopleModule.querySelector("button")
+// const ulEl = peopleModule.querySelector("ul")
+
+// // const inputEl = document.querySelector("input")
+// // const buttonEl = document.querySelector("button")
+// // const ulEl = document.querySelector("ul")
 
 // // PUT NAME INTO THE ARRAY
 // buttonEl.addEventListener('click', function () {
@@ -104,7 +112,7 @@
     const people = {
         people: [],
         init: function () {
-            this.cacheDOM = 2 
+            this.cacheDOM()
         }, // init is how we kick -off our module
         cacheDOM : function(){
 
