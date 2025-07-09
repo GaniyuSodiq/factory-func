@@ -110,14 +110,30 @@
 // we make a function that runs immediately the app opens: IIFE
 (function () {
     const people = {
-        people: [],
+        people: ["Sodiq", "Amirah"], // no any global variable
         init: function () {
             this.cacheDOM()
+            this.render()
         }, // init is how we kick -off our module
-        cacheDOM : function(){
-
-        } // one of the rule of modular js is few dom call. so we want to cache our DOM here
+        cacheDOM: function () {
+            this.peopleModule = document.querySelector("#peopleModule") // THIS CONTAIN ALL THE OTHER ELEMENTS
+            this.inputEl = this.peopleModule.querySelector("input")
+            this.buttonEl = this.peopleModule.querySelector("button")
+            this.ulEl = this.peopleModule.querySelector("ul")
+        }, // one of the rule of modular js is few DOM call. so we want to cache our DOM here in cacheDOM
+        render: function () {
+            this.ulEl.textContent = ""
+            this.people.forEach(function (item) {
+                const personEl = document.createElement("li")
+                const nameEl = document.createElement("span")
+                const delEl = document.createElement("span")
+                nameEl.textContent = item
+                delEl.textContent = "❌"
+                personEl.appendChild(nameEl)
+                personEl.appendChild(delEl)
+                this.ulEl.appendChild(personEl) // we have this cached from the cacheDOM
+            })
+        } // render is use to translate the current state of our module into html DOM
     }
-
     people.init()
 })()
