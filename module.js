@@ -58,14 +58,17 @@ const inputEl = document.querySelector("input")
 const buttonEl = document.querySelector("button")
 const ulEl = document.querySelector("ul")
 
-buttonEl.addEventListener('click', function(){
-    // PUT NAME INTO THE ARRAY
+// PUT NAME INTO THE ARRAY
+buttonEl.addEventListener('click', function () {
     people.push(inputEl.value)
     inputEl.value = ""
+    renderItem()
+})
 
-    // RENDER THE ARRAY
+// RENDER THE ARRAY
+function renderItem() {
     ulEl.textContent = ""
-    people.forEach(function(item){
+    people.forEach(function (item) {
         const personEl = document.createElement("li")
         const nameEl = document.createElement("span")
         const delEl = document.createElement("span")
@@ -75,6 +78,19 @@ buttonEl.addEventListener('click', function(){
         personEl.appendChild(delEl)
         ulEl.appendChild(personEl)
     })
+}
 
+// DELETE FROM THE ARRAY AND DOM
+ulEl.addEventListener("click",
+    function (event) {
+        const removeItem = event.target.closest("li")
+        removeItem.remove() // remove from the DOM
+        const indexToRemove = function () {
+            for (let i = 0; i < people.length; i++) {
+                if (people[i] === event.target.textContent) {
+                    return i
+                }
+            }
+        }
+        people.splice(indexToRemove, 1) // remove from the people array
 })
-
