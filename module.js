@@ -52,45 +52,64 @@
 // THEN RENDER FROM THE ARRAY
 // DELETE REMOVES FROM THE ARRAY AND RE-RENDER ARRAY
 
-const people = []
+// const people = []
 
-const inputEl = document.querySelector("input")
-const buttonEl = document.querySelector("button")
-const ulEl = document.querySelector("ul")
+// const inputEl = document.querySelector("input")
+// const buttonEl = document.querySelector("button")
+// const ulEl = document.querySelector("ul")
 
-// PUT NAME INTO THE ARRAY
-buttonEl.addEventListener('click', function () {
-    people.push(inputEl.value)
-    inputEl.value = ""
-    renderItem()
-})
+// // PUT NAME INTO THE ARRAY
+// buttonEl.addEventListener('click', function () {
+//     people.push(inputEl.value)
+//     inputEl.value = ""
+//     renderItem()
+// })
 
-// RENDER THE ARRAY
-function renderItem() {
-    ulEl.textContent = ""
-    people.forEach(function (item) {
-        const personEl = document.createElement("li")
-        const nameEl = document.createElement("span")
-        const delEl = document.createElement("span")
-        nameEl.textContent = item
-        delEl.textContent = "❌"
-        personEl.appendChild(nameEl)
-        personEl.appendChild(delEl)
-        ulEl.appendChild(personEl)
-    })
-}
+// // RENDER THE ARRAY
+// function renderItem() {
+//     ulEl.textContent = ""
+//     people.forEach(function (item) {
+//         const personEl = document.createElement("li")
+//         const nameEl = document.createElement("span")
+//         const delEl = document.createElement("span")
+//         nameEl.textContent = item
+//         delEl.textContent = "❌"
+//         personEl.appendChild(nameEl)
+//         personEl.appendChild(delEl)
+//         ulEl.appendChild(personEl)
+//     })
+// }
 
-// DELETE FROM THE ARRAY AND DOM
-ulEl.addEventListener("click",
-    function (event) {
-        const removeItem = event.target.closest("li")
-        removeItem.remove() // remove from the DOM
-        const indexToRemove = function () {
-            for (let i = 0; i < people.length; i++) {
-                if (people[i] === event.target.textContent) {
-                    return i
-                }
-            }
-        }
-        people.splice(indexToRemove, 1) // remove from the people array
-})
+// // DELETE FROM THE ARRAY AND DOM
+// ulEl.addEventListener("click",
+//     function (event) {
+//         const removeItem = event.target.closest("li")
+//         removeItem.remove() // remove from the DOM
+//         const indexToRemove = function () {
+//             for (let i = 0; i < people.length; i++) {
+//                 if (people[i] === event.target.textContent) {
+//                     return i
+//                 }
+//             }
+//         }
+//         people.splice(indexToRemove, 1) // remove from the people array
+// })
+
+// NOW LETS TURN THIS CODE INTO MODULAR JAVASCRIPT CODE
+// it is not that the code is bad... but imagine if you have 1000s of line like this
+// 
+
+// we make a function that runs immediately the app opens: IIFE
+(function () {
+    const people = {
+        people: [],
+        init: function () {
+            this.cacheDOM = 2 
+        }, // init is how we kick -off our module
+        cacheDOM : function(){
+
+        } // one of the rule of modular js is few dom call. so we want to cache our DOM here
+    }
+
+    people.init()
+})()
