@@ -113,7 +113,7 @@
         people: ["Sodiq", "Amirah"], // no any global variable
         init: function () {
             this.cacheDOM()
-            console.log(this.ulEl) // unidentified
+            console.log(this.ulEl) // this works
             this.render()
         }, // init is how we kick -off our module
         cacheDOM: function () {
@@ -124,6 +124,7 @@
         }, // one of the rule of modular js is few DOM call. so we want to cache our DOM here in cacheDOM
         render: function () {
             this.ulEl.textContent = ""
+            console.log(this.ulEl) // this works
             this.people.forEach(function (item) {
                 const personEl = document.createElement("li")
                 const nameEl = document.createElement("span")
