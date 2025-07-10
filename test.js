@@ -5,9 +5,6 @@
         giveAlias: function (alias) {
             this.alias.push(alias)
         },
-        showAllNames: function (names) {
-            console.log(names)
-        },
         cacheyDOM: function () {
             this.textField = document.querySelector("#text")
         },
