@@ -113,6 +113,7 @@
         people: ["Sodiq", "Amirah"], // no any global variable
         init: function () {
             this.cacheDOM()
+            console.log(this.ulEl) // unidentified
             this.render()
         }, // init is how we kick -off our module
         cacheDOM: function () {
@@ -136,7 +137,7 @@
                 personEl.appendChild(delEl)
                 // this.ulEl.appendChild(personEl) // we have this cached from the cacheDOM
                 // this.showAllNames(personEl)
-                console.log(this.ulEl)
+                console.log(this.ulEl) // unidentified
             })
         } // render is use to translate the current state of our module into html DOM
     }
