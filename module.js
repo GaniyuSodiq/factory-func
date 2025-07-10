@@ -122,9 +122,6 @@
             this.buttonEl = this.peopleModule.querySelector("button")
             this.ulEl = this.peopleModule.querySelector("ul")
         }, // one of the rule of modular js is few DOM call. so we want to cache our DOM here in cacheDOM
-        // showAllNames: function(person){
-        //     this.ulEl.appendChild(person)
-        // },
         render: function () {
             this.ulEl.textContent = ""
             this.people.forEach(function (item) {
@@ -136,7 +133,6 @@
                 personEl.appendChild(nameEl)
                 personEl.appendChild(delEl)
                 // this.ulEl.appendChild(personEl) // we have this cached from the cacheDOM
-                // this.showAllNames(personEl)
                 console.log(this.ulEl) // unidentified
             })
         } // render is use to translate the current state of our module into html DOM

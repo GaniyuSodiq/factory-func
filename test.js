@@ -8,16 +8,16 @@
         showAllNames: function (names) {
             console.log(names)
         },
-        cacheyDOM: function(){
+        cacheyDOM: function () {
             this.textField = document.querySelector("#text")
         },
         getAllNames: function () {
             let allNames = this.name
             this.alias.forEach((alias) => {
                 allNames += ` has alias ${alias} `
-                this.textField.textContent = allNames // the problem is not identify this dom
-                // console.log(this.textField) // null
-                
+                const li = document.createElement("li")
+                li.textContent = allNames
+                this.textField.appendChild(li)
             })
         },
         init: function () {
