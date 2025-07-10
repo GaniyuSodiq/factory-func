@@ -16,7 +16,8 @@
             this.alias.forEach((alias) => {
                 allNames += ` has alias ${alias} `
                 // this.showAllNames(allNames)
-                this.textField.appendChild(allNames)
+                this.textField.appendChild(allNames) // the problem is not identify this dom
+                
             })
         },
         init: function () {
