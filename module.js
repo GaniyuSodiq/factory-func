@@ -111,11 +111,6 @@
 (function () {
     const people = {
         people: ["Sodiq", "Amirah"], // no any global variable
-        init: function () {
-            this.cacheDOM()
-            console.log(this.ulEl) // this works
-            this.render()
-        }, // init is how we kick -off our module
         cacheDOM: function () {
             this.peopleModule = document.querySelector("#peopleModule") // THIS CONTAIN ALL THE OTHER ELEMENTS
             this.inputEl = this.peopleModule.querySelector("input")
@@ -124,8 +119,11 @@
         }, // one of the rule of modular js is few DOM call. so we want to cache our DOM here in cacheDOM
         render: function () {
             this.ulEl.textContent = ""
-            console.log(this.ulEl) // this works
-            this.people.forEach(function (item) {
+            // this.people.forEach(function (item) { // THIS GAVE ME ALOT OF PAIN BCS 
+            // 'this' in a callback function like here refers the global object
+            // but 'this' in an arrow function like below refers to the parent obj here (person{})
+            // and that is what i was expecting to happen
+            this.people.forEach( (item) => {    
                 const personEl = document.createElement("li")
                 const nameEl = document.createElement("span")
                 const delEl = document.createElement("span")
@@ -133,10 +131,13 @@
                 delEl.textContent = "❌"
                 personEl.appendChild(nameEl)
                 personEl.appendChild(delEl)
-                // this.ulEl.appendChild(personEl) // we have this cached from the cacheDOM
-                console.log(this.ulEl) // unidentified
+                this.ulEl.appendChild(personEl) // we have this cached from the cacheDOM
             })
-        } // render is use to translate the current state of our module into html DOM
+        }, // render is use to translate the current state of our module into html DOM
+        init: function () {
+            this.cacheDOM()
+            this.render()
+        }, // init is how we kick -off our module
     }
     people.init()
 })()
