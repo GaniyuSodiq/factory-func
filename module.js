@@ -110,7 +110,7 @@
 // we make a function that runs immediately the app opens: IIFE
 (function () {
     const people = {
-        people: ["Sodiq", "Amirah"], // no any global variable
+        people: ["Sodiq", "Amirah", "Opeyemi"], // no any global variable
         cacheDOM: function () {
             this.peopleModule = document.querySelector("#peopleModule") // THIS CONTAIN ALL THE OTHER ELEMENTS
             this.inputEl = this.peopleModule.querySelector("input")
@@ -127,11 +127,13 @@
                 const personEl = document.createElement("li")
                 const nameEl = document.createElement("span")
                 const delEl = document.createElement("span")
+
                 nameEl.textContent = item
                 delEl.textContent = "❌"
+
                 personEl.appendChild(nameEl)
                 personEl.appendChild(delEl)
-                this.ulEl.appendChild(personEl) // we have this cached from the cacheDOM
+                this.ulEl.appendChild(personEl) // we have this.ulEl cached from the cacheDOM
             })
         }, // render is use to translate the current state of our module into html DOM
         init: function () {
