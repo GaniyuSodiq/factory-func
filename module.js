@@ -18,7 +18,7 @@
 // // - no memory leaks
 // // - - all events can be unbound
 
-// // 🪜WHAT DOES AN ACTUAL MODULA PROGRAMMING LOOK LIKE
+// // 🥇🥇🥇🥇🥇🥇🥇🪜WHAT DOES AN ACTUAL MODULA PROGRAMMING LOOK LIKE🥇🥇🥇🥇🥇🥇🥇
 // // u will use a pattern in our case here Object literal pattern (mostly used pattern)
 // // see as the whole namimg and getting is living inside one object
 
@@ -46,7 +46,7 @@
 // // you should use methods that are provided for you
 // // in revealing module pattern we can hide away some of the  
 
-// trying to implement the jquery code in vanilla js
+// 🥇🥇🥇🥇🥇🥇🥇trying to implement the jquery code in vanilla js🥇🥇🥇🥇🥇🥇🥇
 // THE PLAN IS TO CREATE A TODO LIST OF NAMES
 // THE NAME IS PUT INTO ARRAY
 // THEN RENDER FROM THE ARRAY
@@ -103,7 +103,7 @@
 //         people.splice(indexToRemove, 1) // remove from the people array
 // })
 
-// NOW LETS TURN THIS CODE INTO MODULAR JAVASCRIPT CODE
+// 🥇🥇🥇🥇🥇🥇🥇NOW LETS TURN THIS CODE INTO MODULAR JAVASCRIPT CODE🥇🥇🥇🥇🥇🥇🥇
 // it is not that the code is bad... but imagine if you have 1000s of line like this
 // modular js improves perormace especially in large code base
 
@@ -112,7 +112,8 @@
 // and you are right. 
 // Thinking about how to code is an important stuff. 
 // it helps the code base and reader on the long run
-(function () {
+
+// (function () {
     const people = {
         people: ["Sodiq", "Amirah", "Opeyemi"], // no any global variable
         init: function () {
@@ -174,8 +175,8 @@
         // ideally, .render() is the only thing that ever touches the dom
         // one thing abt modular js is that you can look at it and most methods have a name
         // and you can see what is going on based on the name
-        addPerson: function () {
-            this.people.push(this.inputEl.value)
+        addPerson: function (name) {
+            this.people.push(name || this.inputEl.value) // if name is passed in or input from the html
             this.inputEl.value = ""
             this.render()
         },
@@ -206,11 +207,12 @@
         // instead of the actual person's name.
         // Use the name inside the first span inside <li> instead.
         // Also, add a safety check to handle clicks that aren't on list items.
-        
+
         deletePerson: function (event) {
             const removeItem = event.target.closest("li")
             if (!removeItem) return; // safeguard in case click outside li
-            const personName = removeItem.querySelector("span").textContent;
+            const personName = removeItem.querySelector("span").textContent; 
+            // picks the first span which is the name span. the second is for ❌
 
             const indexToRemove = (() => {
                 for (let i = 0; i < this.people.length; i++) {
@@ -229,4 +231,23 @@
 
     }
     people.init()
-})()
+// })()
+
+// what you have above is how you do modular javascript
+// most time you might not want to expose all your methods to the API
+// e.g casheDOM, render, bindEvents - we dont want to expose them
+// but you want to expose addPerson and deletePerson
+
+// so test what we are saying
+// if you make the people{} object a global variable ie remove it from being IIFE
+
+// maybe be another part of our code or program wants to add person to our list
+people.addPerson("Olatunji")
+people.addPerson("Aminat")
+people.addPerson("Kenny")
+// now we can add as many as possible name
+// a module/ program / feature can call/use our addperson method
+// but i dont want them to be able to call cacheDOM, bindEvents and render
+// the next topic covers how to do that
+
+// 🥇🥇🥇🥇🥇🥇🥇PREBUL 🥇🥇🥇🥇🥇🥇🥇
