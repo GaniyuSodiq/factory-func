@@ -105,25 +105,56 @@
 
 // NOW LETS TURN THIS CODE INTO MODULAR JAVASCRIPT CODE
 // it is not that the code is bad... but imagine if you have 1000s of line like this
-// 
+// modular js improves perormace especially in large code base
 
 // we make a function that runs immediately the app opens: IIFE
+// if you are new to modular js you might think this is alot of thinking to pull off
+// and you are right. 
+// Thinking about how to code is an important stuff. 
+// it helps the code base and reader on the long run
 (function () {
     const people = {
         people: ["Sodiq", "Amirah", "Opeyemi"], // no any global variable
+        init: function () {
+            this.cacheDOM()
+            this.bindEvents()
+            this.render()
+        }, // init: init is how we kick-off our module
         cacheDOM: function () {
             this.peopleModule = document.querySelector("#peopleModule") // THIS CONTAIN ALL THE OTHER ELEMENTS
             this.inputEl = this.peopleModule.querySelector("input")
             this.buttonEl = this.peopleModule.querySelector("button")
             this.ulEl = this.peopleModule.querySelector("ul")
-        }, // one of the rule of modular js is few DOM call. so we want to cache our DOM here in cacheDOM
+        }, // cacheDOM: one of the rule of modular js is few DOM call. so we want to cache our DOM here in cacheDOM
+        bindEvents: function () {
+            // we dont want to hv a fnc in here bcs then this bindEvents method ...
+            // ... will be doing several things so below code works but we dont want it...
+            // ... it is binding event listerner and also adding a person
+            // it is not a good idea to make a func in bindEvents
+            // this.buttonEl.addEventListener('click', () => { 
+            //     this.people.push(this.inputEl.value)
+            //     this.inputEl.value = ""
+            //     this.render()
+            // })
+            // below code bind the envent to function we declared in another part
+
+            // ONE THING YOU MUST KNOW WHEN BIDING AN EVENT
+            // the context is going to change
+            // so just this.addPerson will longer be people.addPerson
+            // it will be buttonEl.addPerson and that is not what we want 
+            // so we need to bind it to the people{} we want by using bind(this)
+            this.buttonEl.addEventListener("click", this.addPerson.bind(this))
+            // when you are doing modular js, if you want a method to always run the context...
+            // ... with the 'this' value pointing to the object
+            // then you have to bind it like we did in the buttonEl bindEvents
+        }, // bindEvents: to use the event listener only
         render: function () {
             this.ulEl.textContent = ""
             // this.people.forEach(function (item) { // THIS GAVE ME ALOT OF PAIN BCS 
             // 'this' in a callback function like here refers the global object
             // but 'this' in an arrow function like below refers to the parent obj here (person{})
             // and that is what i was expecting to happen
-            this.people.forEach( (item) => {    
+            this.people.forEach((item) => {
                 const personEl = document.createElement("li")
                 const nameEl = document.createElement("span")
                 const delEl = document.createElement("span")
@@ -135,11 +166,18 @@
                 personEl.appendChild(delEl)
                 this.ulEl.appendChild(personEl) // we have this.ulEl cached from the cacheDOM
             })
-        }, // render is use to translate the current state of our module into html DOM
-        init: function () {
-            this.cacheDOM()
+        }, //  render: render is use to translate the current state of our module into html DOM
+        // ideally, .render() is the only thing that ever touches the dom
+        // one thing abt modular js is that you can look at it and most methods have a name
+        // and you can see what is going on based on the name
+        addPerson: function () {
+            this.people.push(this.inputEl.value)
+            this.inputEl.value = ""
             this.render()
-        }, // init is how we kick -off our module
+        }
+        // when you are doing modular js, if you want a method to always run the context...
+        // ... with the 'this' value pointing to the object
+        // then you have to bind it like we did in the buttonEl bindEvents
     }
     people.init()
 })()
