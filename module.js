@@ -182,24 +182,51 @@
         // when you are doing modular js, if you want a method to always run the context...
         // ... with the 'this' value pointing to the object
         // then you have to bind it like we did in the buttonEl bindEvents
+
+        // deletePerson: function (event) {
+        //     const removeItem = event.target.closest("li")
+        //     console.log("Item to remove (clicked)", removeItem)
+        //     // removeItem.remove() // nothing touches our DOM  again except .render()
+        //     console.log("this.people is:", this.people)
+        //     const indexToRemove = (()=>{
+        //         for (let i = 0; i < this.people.length; i++) {
+        //             console.log("going into the if statment", i)
+        //             if (this.people[i] === event.target.textContent) {
+        //                 console.log("in the if statment", i)
+        //                 return i
+        //             }
+        //         }
+        //     })()
+        //     this.people.splice(indexToRemove, 1) // remove from the people array
+        //     console.log("the value of indexToRemove is:", indexToRemove)
+        //     this.render()
+        // }
+        //  THE DELETE SECTION BELOW WAS MY FIRST AND DIDNT WORK AS EXPECTED
+        // The main bug is that you're comparing against event.target.textContent (which can be ❌) 
+        // instead of the actual person's name.
+        // Use the name inside the first span inside <li> instead.
+        // Also, add a safety check to handle clicks that aren't on list items.
+        
         deletePerson: function (event) {
             const removeItem = event.target.closest("li")
-            console.log("Item to remove (clicked)", removeItem)
-            // removeItem.remove() // nothing touches our DOM  again except .render()
-            console.log("this.people is:", this.people)
-            const indexToRemove = (()=>{
+            if (!removeItem) return; // safeguard in case click outside li
+            const personName = removeItem.querySelector("span").textContent;
+
+            const indexToRemove = (() => {
                 for (let i = 0; i < this.people.length; i++) {
-                    console.log("going into the if statment", i)
-                    if (this.people[i] === event.target.textContent) {
-                        console.log("in the if statment", i)
+                    if (this.people[i] === personName) {
                         return i
                     }
                 }
+                return -1; // in case person not found
             })()
-            this.people.splice(indexToRemove, 1) // remove from the people array
-            console.log("the value of indexToRemove is:", indexToRemove)
-            this.render()
+
+            if (indexToRemove > -1) {
+                this.people.splice(indexToRemove, 1) // remove from the people array
+                this.render()
+            }
         }
+
     }
     people.init()
 })()
