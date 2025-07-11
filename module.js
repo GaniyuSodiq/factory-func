@@ -125,6 +125,7 @@
             this.inputEl = this.peopleModule.querySelector("input")
             this.buttonEl = this.peopleModule.querySelector("button")
             this.ulEl = this.peopleModule.querySelector("ul")
+            // this.delEl = this.peopleModule.querySelector(".del")
         }, // cacheDOM: one of the rule of modular js is few DOM call. so we want to cache our DOM here in cacheDOM
         bindEvents: function () {
             // we dont want to hv a fnc in here bcs then this bindEvents method ...
@@ -144,9 +145,11 @@
             // it will be buttonEl.addPerson and that is not what we want 
             // so we need to bind it to the people{} we want by using bind(this)
             this.buttonEl.addEventListener("click", this.addPerson.bind(this))
-            // when you are doing modular js, if you want a method to always run the context...
-            // ... with the 'this' value pointing to the object
+            // when you are doing modular js, if you want a method (e.g this.addPerson here)...
+            // ... to always run the context with the 'this' value pointing to the object
             // then you have to bind it like we did in the buttonEl bindEvents
+            // this.delEl.addEventListener("click", this.deletePerson.bind(this))
+            this.ulEl.addEventListener("click", this.deletePerson.bind(this))
         }, // bindEvents: to use the event listener only
         render: function () {
             this.ulEl.textContent = ""
@@ -161,6 +164,7 @@
 
                 nameEl.textContent = item
                 delEl.textContent = "❌"
+                delEl.classList.add("del")
 
                 personEl.appendChild(nameEl)
                 personEl.appendChild(delEl)
@@ -174,10 +178,28 @@
             this.people.push(this.inputEl.value)
             this.inputEl.value = ""
             this.render()
-        }
+        },
         // when you are doing modular js, if you want a method to always run the context...
         // ... with the 'this' value pointing to the object
         // then you have to bind it like we did in the buttonEl bindEvents
+        deletePerson: function (event) {
+            const removeItem = event.target.closest("li")
+            console.log("Item to remove (clicked)", removeItem)
+            // removeItem.remove() // nothing touches our DOM  again except .render()
+            console.log("this.people is:", this.people)
+            const indexToRemove = (()=>{
+                for (let i = 0; i < this.people.length; i++) {
+                    console.log("going into the if statment", i)
+                    if (this.people[i] === event.target.textContent) {
+                        console.log("in the if statment", i)
+                        return i
+                    }
+                }
+            })()
+            this.people.splice(indexToRemove, 1) // remove from the people array
+            console.log("the value of indexToRemove is:", indexToRemove)
+            this.render()
+        }
     }
     people.init()
 })()
