@@ -202,7 +202,7 @@
 //         //     console.log("the value of indexToRemove is:", indexToRemove)
 //         //     this.render()
 //         // }
-//         //  THE DELETE SECTION BELOW WAS MY FIRST AND DIDNT WORK AS EXPECTED
+//         //  THE DELETE SECTION ABOVE WAS MY FIRST AND DIDNT WORK AS EXPECTED
 //         // The main bug is that you're comparing against event.target.textContent (which can be ❌) 
 //         // instead of the actual person's name.
 //         // Use the name inside the first span inside <li> instead.
@@ -331,3 +331,63 @@
 
 // lets turn our code into the Revealing Model Pattern
 
+
+// 🥇🥇🥇🥇🥇🥇🥇REVEALING MODULE PATTER🥇🥇🥇🥇🥇🥇🥇
+const people = (function () { // we dont need an init function - the function here serve as that
+    const people = ["Sodiq", "Amirah", "Opeyemi"]
+
+    // cached DOM - we are not using 'this' bcs we are in a function
+    const peopleModule = document.querySelector("#peopleModule")
+    const inputEl = peopleModule.querySelector("input")
+    const buttonEl = peopleModule.querySelector("button")
+    const ulEl = peopleModule.querySelector("ul")
+
+    // bind events 
+    buttonEl.addEventListener("click", addPerson) // the fn here is just name bcs the event will invoke it
+    ulEl.addEventListener("click", deletePerson) // the fn here is just name bcs the event will invoke it
+
+    render()
+
+    // render
+    const render = function () {
+        ulEl.textContent = ""
+        people.forEach((item) => {
+            const personEl = document.createElement("li")
+            const nameEl = document.createElement("span")
+            const delEl = document.createElement("span")
+
+            nameEl.textContent = item
+            delEl.textContent = "❌"
+            delEl.classList.add("del")
+
+            personEl.appendChild(nameEl)
+            personEl.appendChild(delEl)
+            ulEl.appendChild(personEl) // we have this.ulEl cached from the cacheDOM
+        })
+    }
+    const addPerson = function (name) {
+        people.push(name || inputEl.value) // if name is passed in or input from the html
+        inputEl.value = ""
+        render()
+    }
+    const deletePerson = function (event) {
+        const removeItem = event.target.closest("li")
+        if (!removeItem) return; // safeguard in case click outside li
+        const personName = removeItem.querySelector("span").textContent;
+        // picks the first span which is the name span. the second is for ❌
+
+        const indexToRemove = (() => {
+            for (let i = 0; i < people.length; i++) {
+                if (people[i] === personName) {
+                    return i
+                }
+            }
+            return -1; // in case person not found
+        })()
+
+        if (indexToRemove > -1) {
+            people.splice(indexToRemove, 1) // remove from the people array
+            render()
+        }
+    }
+})()
