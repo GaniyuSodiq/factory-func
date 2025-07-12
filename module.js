@@ -252,7 +252,82 @@
 
 
 
-// 🥇🥇🥇🥇🥇🥇🥇PREBUL 🥇🥇🥇🥇🥇🥇🥇
+// 🥇🥇🥇🥇🥇🥇🥇REVEALING MODULE PATTER🥇🥇🥇🥇🥇🥇🥇
 // the example above is called object literal pattern
 // bcs we made an object and object will have key: value pairs
+// const people = {
+//     name: "Sodiq",
+//     sayName: function () {
+//         alert("Sodiq")
+//     },
+//     // one of the things that we dont like here ie we have setName
+//     // and eachtime it is called, we always want to render to screen at the same time
+//     setName: function (newName) {
+//         this.name = newName
+//         render()
+//     }
+// }
+// so you dont want people to have access to people.name and be able to change it
+// bcs the name will change but it will not render
+// people.name = "Bob"
+// name is not changed but notging happens - no render
+// so users should only have access to sayName and setName
+// so this pattern is not what you want to use always
+
+
+// SO THERE IS ALSO A PATTERN CALLED REVEALING MODULE PATTERN
+// so instead of our people{} beaing a object, it will be IIFE / self executing function
+// What is IIFE
+// for exmple
+// let a = 1
+// a.toString() // "1"
+// we cant use 1.toString()
+// 1.toString() // Uncaught SyntaxError // js doesnt know the type of 1 here
+// that is bcs 1 is just a number at this point. it has nt been eveluated.
+// let a = 1 has been evaluated. a is now seen as a number type
+// and number types have methods. one is toString()
+// but we can do this:
+// (1).toString() // "1"
+// putting something into parethesis () forces js to evalute the content first..
+// before evaluating the other part of the js statement
+// so same thing applies to a funtion
+// function(){alert("hello")}() // Uncaught SyntaxError
+// but we can wrap it in a parenthesis and it will run
+// (function(){alert("hello")}())()
+
+// so that is what we are doing in this pattern.
+// we are wrting a function and then evaluating and invoking it right away
+// const people = (function(){})()
+// we even pass in a parameter - just like calling any function
+// const people = (function(name){alert(name)})("Sodiq")
+// so that is what IIFE is
+// also me make private variables bcs we are in a function
+// so nothing can use our variable except we want to
+// const people = (function(){
+//     const name = "Sodiq"
+// })()
+
+// alert(name) // nothing is shown
+// so this gives us private variables that only exist within this function scope.
+// function within the scope can access it
+// const people = (function(){
+//     const name = "Sodiq"
+//     function sayName(){
+//         alert(name)
+//     }
+//     return {sayName}
+// })()
+// // the code above retuns | people = {sayName: ƒ} |
+// // so can run sayName function from there
+// people.sayName() // alert Sodiq
+
+// people.name = "Bob"
+// people.name // 'Bob'
+// people // {name: 'Bob', sayName: ƒ}
+
+// people.sayName() // still alert Sodiq
+// so the variable in our code and not be re-written by outside code
+// this is the Revealing Model Pattern
+
+// lets turn our code into the Revealing Model Pattern
 
