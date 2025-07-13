@@ -332,8 +332,8 @@
 // lets turn our code into the Revealing Model Pattern
 
 
-// 🥇🥇🥇🥇🥇🥇🥇REVEALING MODULE PATTER🥇🥇🥇🥇🥇🥇🥇
-const people = (function () { // we dont need an init function - the function here serve as that
+// 🥇🥇🥇🥇🥇🥇🥇REVEALING MODULE PATTERN🥇🥇🥇🥇🥇🥇🥇
+const people = (function () { // we dont need an init function - the IIFE here serve as that and more
     const people = ["Sodiq", "Amirah", "Opeyemi"]
 
     // cached DOM - we are not using 'this' bcs we are in a function
@@ -346,10 +346,10 @@ const people = (function () { // we dont need an init function - the function he
     buttonEl.addEventListener("click", addPerson) // the fn here is just name bcs the event will invoke it
     ulEl.addEventListener("click", deletePerson) // the fn here is just name bcs the event will invoke it
 
-    render()
+    _render()
 
     // render
-    const render = function () {
+    function _render() { // we use underscore(_) to signify private methods (Method that we wont expose)
         ulEl.textContent = ""
         people.forEach((item) => {
             const personEl = document.createElement("li")
@@ -365,29 +365,50 @@ const people = (function () { // we dont need an init function - the function he
             ulEl.appendChild(personEl) // we have this.ulEl cached from the cacheDOM
         })
     }
-    const addPerson = function (name) {
-        people.push(name || inputEl.value) // if name is passed in or input from the html
+    function addPerson(value) {
+        // since we want to be able to pass in a name string directly without clicking the addPerson button
+        // to be able to use this method from another part of code or use as an API
+        // people.push(value || inputEl.value) // this doesnt work: [object PointerEvent] error
+        // bcs by default the click event from our bindevents will send an Obj as arg/value 
+        // and that leads to error [object PointerEvent]
+        const name = (typeof value == "string") ? value : inputEl.value
+        // i discovered that 2 equal signs (==) works best when doing typeof comparism
+        people.push(name)
         inputEl.value = ""
-        render()
+        _render()
     }
-    const deletePerson = function (event) {
-        const removeItem = event.target.closest("li")
-        if (!removeItem) return; // safeguard in case click outside li
-        const personName = removeItem.querySelector("span").textContent;
-        // picks the first span which is the name span. the second is for ❌
-
-        const indexToRemove = (() => {
-            for (let i = 0; i < people.length; i++) {
-                if (people[i] === personName) {
-                    return i
+    function deletePerson(event) {
+        // since we want to be able to pass in a number directly without using the deletePerson event
+        // to be able to use this method from another part of code or use as an API
+        let indexToRemove;
+        if (typeof event == "number") {
+            indexToRemove = event
+        } else {
+            const removeItem = event.target.closest("li")
+            if (!removeItem) return; // safeguard in case click outside li
+            const personName = removeItem.querySelector("span").textContent;
+            // picks the first span which is the name span. the second is for ❌
+            indexToRemove = (() => {
+                for (let i = 0; i < people.length; i++) {
+                    if (people[i] === personName) {
+                        return i
+                    }
                 }
-            }
-            return -1; // in case person not found
-        })()
+                return -1; // in case person not found
+            })()
+        }
 
         if (indexToRemove > -1) {
             people.splice(indexToRemove, 1) // remove from the people array
-            render()
+            _render()
         }
     }
+
+    // Expose the method that we want to expose
+    return { addPerson, deletePerson }
 })()
+
+people // {addPerson: ƒ, deletePerson: ƒ}
+// so we can addPerson and deletePerson outside of our module 
+people.addPerson("Mosafejo") // adds "Mosafejo" to the names. We can also use the input
+people.deletePerson(0) // removes "Sodiq" from the names. we can also use the clicking
