@@ -352,7 +352,7 @@ const people = (function () { // we dont need an init function - the IIFE here s
     function _render() { // we use underscore(_) to signify private methods (Method that we wont expose)
         ulEl.textContent = ""
         people.forEach((item) => {
-            const personEl = document.createElement("li")it
+            const personEl = document.createElement("li")
             const nameEl = document.createElement("span")
             const delEl = document.createElement("span")
 
