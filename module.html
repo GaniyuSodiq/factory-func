@@ -1,31 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="module.js" defer></script>
     <style>
-        body{
+        body {
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
         }
-        #hero-unit{
+
+        #statsModule{
+            background-color: gainsboro;
+            display: inline-block;
+            width: 50%;
+        }
+
+        #hero-unit {
             display: inline-block;
             background-color: aliceblue;
             border-radius: 5px;
             padding: 10px;
         }
-        li{
+
+        li {
             display: inline-block;
             list-style: none;
             background-color: lightgreen;
             margin: 0 5px;
             padding: 5px;
         }
-
     </style>
 </head>
+
 <body>
+    <div id="statsModule">
+        <h3>Stats</h3>
+        <p>People:<span></span></p>
+    </div>
     <div id="hero-unit">
         <h1>JS <br>Tutorial</h1>
     </div>
@@ -36,4 +54,5 @@
         <ul id="person"></ul>
     </div>
 </body>
+
 </html>
