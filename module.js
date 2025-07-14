@@ -1,3 +1,4 @@
+import {stats} from "/stats.js";
 // // 🪜MODULA JAVASCRIPT - allows you to break your code into logical components
 // // Each component that do one thing really well and work together with other components
 
@@ -332,6 +333,7 @@
 // lets turn our code into the Revealing Model Pattern
 
 
+
 // 🥇🥇🥇🥇🥇🥇🥇REVEALING MODULE PATTERN🥇🥇🥇🥇🥇🥇🥇
 const people = (function () { // we dont need an init function - the IIFE here serve as that and more
     const people = ["Sodiq", "Amirah", "Opeyemi"]
@@ -364,6 +366,7 @@ const people = (function () { // we dont need an init function - the IIFE here s
             personEl.appendChild(delEl)
             ulEl.appendChild(personEl) // we have this.ulEl cached from the cacheDOM
         })
+        stats.setPeople(people.length) // i made the stats module in stats.js and imported it here
     }
     function addPerson(value) {
         // since we want to be able to pass in a name string directly without clicking the addPerson button
