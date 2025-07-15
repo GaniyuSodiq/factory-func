@@ -8,8 +8,9 @@ const stats = (function(){
     const statsModule = document.querySelector("#statsModule")
     const statsSpan = statsModule.querySelector("p").querySelector("span")
 
+    // bind event
     events.on("peopleChanged", setPeople)
-    // i subscribe to peopleChanged and i want setPeople to fire
+    // i subscribe to peopleChanged in pubSub and i want setPeople to fire
 
     _render()
 
@@ -22,11 +23,14 @@ const stats = (function(){
         _render() // render the value to screen
     }
 
+    // if we want to destroy this stats module from DOM and javascript
     function destroy(){
-        statsModule.remove()
+        statsModule.remove() // remove statsModule from the DOM
+        events.off("peopleChanged", setPeople) // unbind event
     }
 
-    // return {setPeople} // we are exposing just one method. no longer needed if we use use pubSub
+    // return {setPeople} // we are exposing just one method. this api no longer needed if we use use pubSub
+    return{destroy}
 })()
 // stats.setPeople(23)
 

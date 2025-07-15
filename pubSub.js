@@ -67,3 +67,9 @@ const events = {
 
 
 export {events}
+
+
+// ⭐⭐⭐⭐⭐⭐ PUBSUB JAVASCRIPT DESIGN PATTERN IMPLEMENTATION⭐⭐⭐⭐⭐⭐
+// we have 2 modules in our project
+// pubsub is a great way to scale our app further
+// and we can remove any module without affecting the main module
