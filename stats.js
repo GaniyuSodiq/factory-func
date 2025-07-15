@@ -1,3 +1,6 @@
+import {events} from "/pubSub.js";
+
+// this is another Revealing Model for stats
 const stats = (function(){
     let people = 0;
 
@@ -5,22 +8,25 @@ const stats = (function(){
     const statsModule = document.querySelector("#statsModule")
     const statsSpan = statsModule.querySelector("p").querySelector("span")
 
+    pubsub.subscribe("peopleChanged", setPeople)
+    // i subscribe to peopleChanged and i want setPeople to fire
+
     _render()
 
     function _render(){
         statsSpan.textContent = people
     }
 
-    function setPeople(newPeople){
-        people = newPeople
-        _render()
+    function setPeople(newPeople){  // gets the number of people
+        people = newPeople // give it to our people variable here
+        _render() // render the value to screen
     }
 
     function destroy(){
         statsModule.remove()
     }
 
-    return {setPeople}
+    return {setPeople} // we are exposing just one method
 })()
 // stats.setPeople(23)
 

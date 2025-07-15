@@ -1,4 +1,6 @@
 import {stats} from "/stats.js";
+import {events} from "/pubSub.js";
+
 // // 🪜MODULA JAVASCRIPT - allows you to break your code into logical components
 // // Each component that do one thing really well and work together with other components
 
@@ -366,7 +368,12 @@ const people = (function () { // we dont need an init function - the IIFE here s
             personEl.appendChild(delEl)
             ulEl.appendChild(personEl) // we have this.ulEl cached from the cacheDOM
         })
-        stats.setPeople(people.length) // i made the stats module in stats.js and imported it here
+        // stats.setPeople(people.length) // i made the stats module in stats.js and imported it here
+        // pass the people lengh to stats module when this render is called
+
+        // pubsub.publish("peopleChanged", people.length) we can send/publish just the length
+        pubsub.publish("peopleChanged", people)
+        // peole changed and we are sending them all the people
     }
     function addPerson(value) {
         // since we want to be able to pass in a name string directly without clicking the addPerson button
@@ -415,3 +422,24 @@ people // {addPerson: ƒ, deletePerson: ƒ}
 // so we can addPerson and deletePerson outside of our module 
 people.addPerson("Mosafejo") // adds "Mosafejo" to the names. We can also use the input
 people.deletePerson(0) // removes "Sodiq" from the names. we can also use the clicking
+
+
+// ⭐⭐⭐⭐⭐⭐ PUBSUB JAVASCRIPT DESIGN PATTERN ⭐⭐⭐⭐⭐⭐
+// stats.setPeople(people.length)
+// the way we import another module here (ie stats) and used it DOESNT SCALE
+// we will be okay and good if we have 4-6 module importing and exporting around
+// imagine if there are 10 modules that need to know when the render here is called
+// maybe a header that need to update the count. A sidebar etc
+// the module name and method are diffrent but they all use the people.length
+// imagine if these modules have different parts like this that connects still coneects together
+// it gets pretty ugly really fast. So this method is not used in big projects.
+
+// THE PROBLEM now is that the people modul will have to be aware of every other module that depend on it..
+// and their api (method).
+// there should be a better way instead of keeping this huge list of modules on my people module
+
+// THE BETTER WAY is that the people module should be able to fire up a command...
+// ...and every other module that depends on it automatically updates.
+// it is called COUPLING. PUBSUB. MEDIATOR. EVENTS SYSTEM
+// So PubSub is like a central guy that all the modules that need the feature subscribes to
+// so if the feature changes, the module that subscribe to it get the chages without any weight on the feature
