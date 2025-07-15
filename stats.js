@@ -8,7 +8,7 @@ const stats = (function(){
     const statsModule = document.querySelector("#statsModule")
     const statsSpan = statsModule.querySelector("p").querySelector("span")
 
-    pubsub.subscribe("peopleChanged", setPeople)
+    events.on("peopleChanged", setPeople)
     // i subscribe to peopleChanged and i want setPeople to fire
 
     _render()
@@ -18,7 +18,7 @@ const stats = (function(){
     }
 
     function setPeople(newPeople){  // gets the number of people
-        people = newPeople // give it to our people variable here
+        people = newPeople.length // give it to our people variable here
         _render() // render the value to screen
     }
 
@@ -26,7 +26,7 @@ const stats = (function(){
         statsModule.remove()
     }
 
-    return {setPeople} // we are exposing just one method
+    // return {setPeople} // we are exposing just one method. no longer needed if we use use pubSub
 })()
 // stats.setPeople(23)
 

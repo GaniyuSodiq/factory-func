@@ -372,7 +372,7 @@ const people = (function () { // we dont need an init function - the IIFE here s
         // pass the people lengh to stats module when this render is called
 
         // pubsub.publish("peopleChanged", people.length) we can send/publish just the length
-        pubsub.publish("peopleChanged", people)
+         events.emit("peopleChanged", people)
         // peole changed and we are sending them all the people
     }
     function addPerson(value) {
