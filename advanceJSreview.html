@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advance JS Review Practice</title>
+</head>
+
+<body>
+    <script>
+        // program to take in any string and convert to camelCase
+        // border-Left-Right to borderLeftRight
+        function camelCase(str) {
+            return str.split("-").map((word, index) => index === 0 ? word : word[0].toUpperCase() + word.slice(1)).join("")
+        }
+
+        console.log(camelCase("border-left-right"))
+
+
+
+
+        // program to add, edit, delete from an array 
+        // arrey [Sodiq, Kenny, Aminat, Adeolu]
+        // change Adeolu to Adeola, delete Aminat,  
+
+        let names = ["Sodiq", "Kenny", "Aminat", "Adeolu"]
+
+        // ADD NAME
+        function addName(newName){
+            console.log("Adding a new name: "+ newName)
+            console.log(names)
+            names.push(newName)
+            console.log(names)
+        }
+
+        // DELETE NAME
+        function deleteName(indexToDelete){
+            console.log("Deleting a name: "+ names[indexToDelete])
+            console.log(names)
+            names.splice(indexToDelete, 1)
+            console.log(names)
+        }
+
+        // EDIT NAME
+        function editName(indexToEdit, editedTo){
+            console.log("Editing a name: "+ names[indexToEdit])
+            console.log(names)
+            names.splice(indexToEdit, 1, editedTo)
+            console.log(names)
+        }
+
+        addName("Opeyemi")
+    </script>
+</body>
+
+</html>
