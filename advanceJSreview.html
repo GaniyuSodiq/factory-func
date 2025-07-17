@@ -27,30 +27,35 @@
         let names = ["Sodiq", "Kenny", "Aminat", "Adeolu"]
 
         // ADD NAME
-        function addName(newName){
-            console.log("Adding a new name: "+ newName)
+        function addName(newName) {
+            console.log("Adding a new name: " + newName)
             console.log(names)
             names.push(newName)
             console.log(names)
         }
 
         // DELETE NAME
-        function deleteName(indexToDelete){
-            console.log("Deleting a name: "+ names[indexToDelete])
+        function deleteName(indexToDelete) {
+            console.log("Deleting a name: " + names[indexToDelete])
             console.log(names)
             names.splice(indexToDelete, 1)
             console.log(names)
         }
 
         // EDIT NAME
-        function editName(indexToEdit, editedTo){
-            console.log("Editing a name: "+ names[indexToEdit])
+        function editName(indexToEdit, editedTo) {
+            console.log("Editing a name: " + names[indexToEdit])
             console.log(names)
             names.splice(indexToEdit, 1, editedTo)
             console.log(names)
         }
 
         addName("Opeyemi")
+
+        // FUNCTION THAT TAKES OUT VALUES >= A AND <= B FROM AN ARRAY
+        const nums = [2, 7, 3, 9, 10, 54, 32, 25]
+        let loeAB = nums.filter((num) => num >= 20 && num <= 50)
+        console.log(loeAB)
     </script>
 </body>
 
