@@ -44,13 +44,14 @@
 
         // EDIT NAME
         function editName(indexToEdit, editedTo) {
-            console.log("Editing a name: " + names[indexToEdit])
+            console.log("Editing name: " + names[indexToEdit] + " with " + editedTo)
             console.log(names)
             names.splice(indexToEdit, 1, editedTo)
             console.log(names)
         }
 
         addName("Opeyemi")
+        editName(1, "Kehinde") // Editing name: Kenny with Kehinde ...
 
         // FUNCTION THAT TAKES OUT VALUES >= A AND <= B FROM AN ARRAY
         const nums = [2, 7, 3, 9, 10, 54, 32, 25]
