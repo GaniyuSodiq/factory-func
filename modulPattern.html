@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Module Pattern</title>
 </head>
+
 <body>
     <script>
 
@@ -16,13 +18,27 @@
 
 
         // lets create a module with a privae function inside
-        const Formatter = (function(){
-            const log = (message) => `[${Date.now}] Logger: ${message}`
-        })()
+        // const Formatter = (function(){
+        //     const log = (message) => `[${Date.now}] Logger: ${message}`
+        // })()
 
         // if we try to run this in the console, we get an error
-        Formatter.log("Hello"); // Uncaught TypeError: Cannot read properties of undefined (reading 'log')
+        // Formatter.log("Hello"); // Uncaught TypeError: Cannot read properties of undefined (reading 'log')
 
+        // So, now we know that accessing a module is actually accessing whatever it returns.
+
+
+        // Here the log function is a private one. 
+        // It can be accessed from within the module and other functions inside can execute it. Let’s try!
+        const Formatter = (function () {
+            const log = (message) => `[${Date.now}] Logger: ${message}`
+
+            const makeUpperCase = (text) => {
+                log("Making Upper Case")
+                return text.toUpperCase()
+            }
+        })()
     </script>
 </body>
+
 </html>
