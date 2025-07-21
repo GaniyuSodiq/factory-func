@@ -10,14 +10,14 @@
 <body>
     <script>
 
-        // A module is a construct somewhat similar to a singleton class. 
+        // 1⭐⭐⭐ A module is a construct somewhat similar to a singleton class. 
         // It has only one instance and exposes its members, 
         // but it doesn’t have any kind of internal state.
 
         // Module is created as an IIFE
 
 
-        // lets create a module with a privae function inside
+        // 2⭐⭐⭐ lets create a module with a private function inside
         // const Formatter = (function(){
         //     const log = (message) => console.log(`[${Date.now()}] Logger: ${message}`)
         // })()
@@ -28,7 +28,7 @@
         // So, now we know that accessing a module is actually accessing whatever it returns.
 
 
-        // Here the log function is a private one. 
+        // 3⭐⭐⭐ Here the log function is a private one. 
         // It can be accessed from within the module and other functions inside can execute it. Let’s try!
         // const Formatter = (function () {
         //     const log = (message) => console.log(`[${Date.now()}] Logger: ${message}`)
@@ -40,20 +40,53 @@
         // })()
 
 
-        // Exposing a module
+        // 4⭐⭐⭐ Exposing a module
 
         // Do not return a single function (although it is possible), return an object with it!
+        // const Formatter = (function () {
+        //     const log = (message) => console.log(`[${Date.now()}] Logger: ${message}`)
+
+        //     const makeUpperCase = (text) => {
+        //         log("Making Upper Case")
+        //         return text.toUpperCase()
+        //     }
+        //     return { makeUpperCase }
+        // })()
+
+        // console.log(Formatter.makeUpperCase("sodiq")) // [1753117107165] Logger: Making Upper Case /n SODIQ
+
+
+        // 5⭐⭐⭐ Modules can house not only functions, but arrays, objects and primitives as well.
         const Formatter = (function () {
+            let timesRun = 0;
             const log = (message) => console.log(`[${Date.now()}] Logger: ${message}`)
+
+            const setTimesRun = () => {
+                log("Setting times run")
+                timesRun++
+            }
 
             const makeUpperCase = (text) => {
                 log("Making Upper Case")
+                setTimesRun()
+                console.log("timesRun in makeUpperCaser fn " + timesRun)
                 return text.toUpperCase()
             }
-            return { makeUpperCase }
+            return { makeUpperCase, timesRun }
         })()
 
-        console.log(Formatter.makeUpperCase("sodiq")) // [1753117107165] Logger: Making Upper Case /n SODIQ
+        // lets execute the return object contents
+        console.log(Formatter.makeUpperCase("sodiq")) // SODIQ
+        console.log(Formatter.timesRun) // 0 
+
+        // As expected, 0 is shown. But note that this can be overwritten from outside.
+
+        Formatter.timesRun = 10
+        console.log(Formatter.timesRun) // 10
+
+        // This shows that everything publicly exposed can be changed from the outside. 
+        // This is one of the biggest module pattern drawbacks.
+
     </script>
 </body>
 
