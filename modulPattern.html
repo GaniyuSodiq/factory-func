@@ -57,35 +57,59 @@
 
 
         // 5⭐⭐⭐ Modules can house not only functions, but arrays, objects and primitives as well.
+        // const Formatter = (function () {
+        //     let timesRun = 0;
+        //     const log = (message) => console.log(`[${Date.now()}] Logger: ${message}`)
+
+        //     const setTimesRun = () => {
+        //         log("Setting times run")
+        //         timesRun++
+        //     }
+
+        //     const makeUpperCase = (text) => {
+        //         log("Making Upper Case")
+        //         setTimesRun()
+        //         console.log("timesRun in makeUpperCaser fn " + timesRun)
+        //         return text.toUpperCase()
+        //     }
+        //     return { makeUpperCase, timesRun }
+        // })()
+
+        // lets execute the return object contents
+        // console.log(Formatter.makeUpperCase("sodiq")) // SODIQ
+        // console.log(Formatter.timesRun) // 0 
+
+        // As expected, 0 is shown. But note that this can be overwritten from outside.
+
+        // Formatter.timesRun = 10
+        // console.log(Formatter.timesRun) // 10
+
+        // This shows that everything publicly exposed can be changed from the outside. 
+        // This is one of the biggest module pattern drawbacks.
+
+
+
+        // 6⭐⭐⭐ Reference types works differently. 
+        // Here, you can define it and it will be populated as you go.
         const Formatter = (function () {
-            let timesRun = 0;
+            const timesRun = [];
             const log = (message) => console.log(`[${Date.now()}] Logger: ${message}`)
 
-            const setTimesRun = () => {
-                log("Setting times run")
-                timesRun++
-            }
-
+          
             const makeUpperCase = (text) => {
                 log("Making Upper Case")
-                setTimesRun()
-                console.log("timesRun in makeUpperCaser fn " + timesRun)
+                timesRun.push(null)
                 return text.toUpperCase()
             }
             return { makeUpperCase, timesRun }
         })()
 
-        // lets execute the return object contents
         console.log(Formatter.makeUpperCase("sodiq")) // SODIQ
-        console.log(Formatter.timesRun) // 0 
+        console.log(Formatter.makeUpperCase("sodiq")) // SODIQ
+        console.log(Formatter.makeUpperCase("sodiq")) // SODIQ
+        console.log(Formatter.makeUpperCase("sodiq")) // SODIQ
+        console.log(Formatter.timesRun.length) // 4
 
-        // As expected, 0 is shown. But note that this can be overwritten from outside.
-
-        Formatter.timesRun = 10
-        console.log(Formatter.timesRun) // 10
-
-        // This shows that everything publicly exposed can be changed from the outside. 
-        // This is one of the biggest module pattern drawbacks.
 
     </script>
 </body>
