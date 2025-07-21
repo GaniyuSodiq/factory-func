@@ -17,10 +17,12 @@
 
         // lets create a module with a privae function inside
         const Formatter = (function(){
-            const log = (message) => `[${Date.now}]: Logger ${message}`
+            const log = (message) => `[${Date.now}] Logger: ${message}`
         })()
 
-        
+        // if we try to run this in the console, we get an error
+        Formatter.log("Hello"); // Uncaught TypeError: Cannot read properties of undefined (reading 'log')
+
     </script>
 </body>
 </html>
