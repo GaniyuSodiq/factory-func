@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Module Pattern</title>
 </head>
+<p id="target"></p>
 
 <body>
     <script>
@@ -91,26 +92,58 @@
 
         // 6⭐⭐⭐ Reference types works differently. 
         // Here, you can define it and it will be populated as you go.
+        // const Formatter = (function () {
+        //     const timesRun = [];
+        //     const log = (message) => console.log(`[${Date.now()}] Logger: ${message}`)
+
+
+        //     const makeUpperCase = (text) => {
+        //         log("Making Upper Case")
+        //         timesRun.push(null)
+        //         return text.toUpperCase()
+        //     }
+        //     return { makeUpperCase, timesRun }
+        // })()
+
+        // console.log(Formatter.makeUpperCase("sodiq")) // SODIQ
+        // console.log(Formatter.makeUpperCase("sodiq")) // SODIQ
+        // console.log(Formatter.makeUpperCase("sodiq")) // SODIQ
+        // console.log(Formatter.makeUpperCase("sodiq")) // SODIQ
+        // console.log(Formatter.timesRun.length) // 4
+
+
+
+        // 7⭐⭐⭐ Declaring module dependencies eg DOM
+        // I like to treat modules as closed entities. 
+        // Meaning, they reside within themselves and nothing more is needed for them to exist. 
+        // But sometimes you may want to work with, for example, DOM or window global object.
+
+
+        //To achieve that, module may have dependencies. 
+        // Let’s try to write a function that will write a message to our requested HTML element.
         const Formatter = (function () {
-            const timesRun = [];
             const log = (message) => console.log(`[${Date.now()}] Logger: ${message}`)
 
-          
             const makeUpperCase = (text) => {
                 log("Making Upper Case")
-                timesRun.push(null)
                 return text.toUpperCase()
             }
-            return { makeUpperCase, timesRun }
+
+            const writeToDom = function (selector, message) {
+                document.querySelector(selector).textContent = message
+            }
+
+            return { makeUpperCase, writeToDom }
         })()
 
-        console.log(Formatter.makeUpperCase("sodiq")) // SODIQ
-        console.log(Formatter.makeUpperCase("sodiq")) // SODIQ
-        console.log(Formatter.makeUpperCase("sodiq")) // SODIQ
-        console.log(Formatter.makeUpperCase("sodiq")) // SODIQ
-        console.log(Formatter.timesRun.length) // 4
+        Formatter.writeToDom("#target", "Hello Manager")
 
+        // It works out of the box (assuming that we have an element with id target in our DOM). 
+        // Sounds great, but document is available only when the DOM is accessible.
+        // Running the code on a server would produce an error.
+        // So, how to make sure that we’re good to go?
 
+        // One of the options is to check whether document exists.
     </script>
 </body>
 
