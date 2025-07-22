@@ -144,7 +144,7 @@
         // Running the code on a server would produce an error.
         // So, how to make sure that we’re good to go?
 
-        // One of the options is to check whether document exists.
+        // 8⭐⭐⭐ One of the options is to check whether document exists.
         // const writeToDom = (selector, message) => {
         //     if (!!document && "querySelector" in document) {
         //          "In JavaScript, the !! operator is a common idiom used to explicitly convert a...
@@ -156,10 +156,12 @@
         // }
         // And this pretty much takes care of everything, but I don’t like it. 
         // Now the module really depends on something from the outside. 
-        // It’s „I will go only if my friend will go too” scenario. It has to be like this?
+        // It’s like "I will go only if my friend will go too” scenario. It has to be like this?
         // // No, of course not. 
-        // // We can declare our module’s dependencies and inject them as we go.
 
+        
+
+        // 9⭐⭐⭐ We can declare our module’s dependencies and inject them as we go.
         // const Formatter = (function (doc) {
         //     const log = (message) => console.log(`[${Date.now()}] Logger: ${message}`)
 
@@ -167,16 +169,16 @@
         //         log("Making Upper Case")
         //         return text.toUpperCase()
         //     }
-
+//
         //     const writeToDom = (selector, message) => {
-        //         if (!!doc && "querySelector" in doc) { // !! is confirm the check - code will work if nt there
+        //         if (!!doc && "querySelector" in doc) { // !! is confirm the check - 
+        //             code will work if !! is not there
         //             doc.querySelector(selector).textContent = message
         //         }
         //     }
-
+//
         //     return { makeUpperCase, writeToDom }
         // })(document)
-
         // Formatter.writeToDom("#target", "Hello Manager Sodiq") // Hello Manager Sodiq - on dom
 
         // Let’s follow it step by step. At the top, there is an argument to our function. 
@@ -185,9 +187,9 @@
         // Why? Those are the arguments our module will be invoked with.
         // Why I changed the argument name in the module? I don’t like to shadow variables.
 
-        // This is a great opportunity for testing, of course. 
-        // Now, rather than relying on whether our testing tools have 
-        // DOM simulator or something similar, we can insert a mock. 
+        // 9⭐⭐⭐ This is a great opportunity for testing, of course. 
+        // Now, rather than relying on whether our testing tools have ...
+        // ...DOM simulator or something similar, we can insert a mock. 
         // But we need to insert it during our definition, not later. 
         // This is fairly simple, you just need to write a mock and place is as a „spare”:
         const documentMock = (() => ({
