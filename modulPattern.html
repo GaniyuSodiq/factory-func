@@ -121,6 +121,40 @@
 
         //To achieve that, module may have dependencies. 
         // Let’s try to write a function that will write a message to our requested HTML element.
+        // const Formatter = (function () {
+        //     const log = (message) => console.log(`[${Date.now()}] Logger: ${message}`)
+
+        //     const makeUpperCase = (text) => {
+        //         log("Making Upper Case")
+        //         return text.toUpperCase()
+        //     }
+
+        //     const writeToDom = (selector, message) => {
+        //         document.querySelector(selector).textContent = message
+        //     }
+
+        //     return { makeUpperCase, writeToDom }
+        // })()
+
+        // Formatter.writeToDom("#target", "Hello Manager")
+
+        // It works out of the box (assuming that we have an element with id target in our DOM). 
+        // Sounds great, but document is available only when the DOM is accessible.
+        // Running the code on a server would produce an error.
+        // So, how to make sure that we’re good to go?
+
+        // One of the options is to check whether document exists.
+        // const writeToDom = (selector, message) => {
+        //     if (!!document && "querySelector" in document) {
+        //         document.querySelector(selector).textContent = message
+        //     }
+        // }
+        // And this pretty much takes care of everything, but I don’t like it. 
+        // Now the module really depends on something from the outside. 
+        // It’s „I will go only if my friend will go too” scenario. It has to be like this?
+        // // No, of course not. 
+        // // We can declare our module’s dependencies and inject them as we go.
+
         const Formatter = (function () {
             const log = (message) => console.log(`[${Date.now()}] Logger: ${message}`)
 
@@ -129,21 +163,13 @@
                 return text.toUpperCase()
             }
 
-            const writeToDom = function (selector, message) {
+            const writeToDom = (selector, message) => {
                 document.querySelector(selector).textContent = message
             }
 
             return { makeUpperCase, writeToDom }
         })()
 
-        Formatter.writeToDom("#target", "Hello Manager")
-
-        // It works out of the box (assuming that we have an element with id target in our DOM). 
-        // Sounds great, but document is available only when the DOM is accessible.
-        // Running the code on a server would produce an error.
-        // So, how to make sure that we’re good to go?
-
-        // One of the options is to check whether document exists.
     </script>
 </body>
 
