@@ -82,13 +82,47 @@
         // console.log(Formatter.timesRun) // 0 
 
         // As expected, 0 is shown. But note that this can be overwritten from outside.
-
-        // Formatter.timesRun = 10
+                // Formatter.timesRun = 10
         // console.log(Formatter.timesRun) // 10
 
         // This shows that everything publicly exposed can be changed from the outside. 
         // This is one of the biggest module pattern drawbacks.
 
+        /// ⭐⭐⭐⭐⭐⭐⭐⭐
+
+        //In your code, Formatter.timesRun is always 0 because it's a snapshot of the 
+        // timesRun variable at the time the Formatter object is created—
+        // not a live reference to the actual timesRun inside the closure.
+
+        // Here’s what’s happening step by step:
+
+        // 1. timesRun is a private variable
+        //         let timesRun = 0;
+        // This is scoped inside the IIFE(Formatter = (function () { ... })) 
+        // and is not directly accessible from outside.
+
+        // 2. Formatter returns:
+        //         return {
+        //             makeUppercase,
+        //             timesRun,
+        //         }
+        // At this moment, timesRun(which is 0) is returned by value, 
+        // not as a reference to the internal variable.
+
+        // So:
+        // Formatter.timesRun is a property of the returned object, initialized to 0.
+        // When setTimesRun() is called inside makeUppercase(), 
+        // it updates the internal timesRun variable, but not the Formatter.timesRun property.
+
+        // ✅ To fix this, you could expose a function to get the current value:
+
+        //         return {
+        //             makeUppercase,
+        //             getTimesRun: () => timesRun
+        //         };
+        //         console.log(Formatter.makeUppercase("tomek"));
+        //         console.log(Formatter.getTimesRun()); // This would correctly show 1
+        /// ⭐⭐⭐⭐⭐⭐⭐⭐
 
 
         // 6⭐⭐⭐ Reference types works differently. 
@@ -159,7 +193,7 @@
         // It’s like "I will go only if my friend will go too” scenario. It has to be like this?
         // // No, of course not. 
 
-        
+
 
         // 9⭐⭐⭐ We can declare our module’s dependencies and inject them as we go.
         // const Formatter = (function (doc) {
@@ -169,14 +203,14 @@
         //         log("Making Upper Case")
         //         return text.toUpperCase()
         //     }
-//
+        //
         //     const writeToDom = (selector, message) => {
         //         if (!!doc && "querySelector" in doc) { // !! is confirm the check - 
         //             code will work if !! is not there
         //             doc.querySelector(selector).textContent = message
         //         }
         //     }
-//
+        //
         //     return { makeUpperCase, writeToDom }
         // })(document)
         // Formatter.writeToDom("#target", "Hello Manager Sodiq") // Hello Manager Sodiq - on dom
@@ -193,7 +227,7 @@
         // But we need to insert it during our definition, not later. 
         // This is fairly simple, you just need to write a mock and place is as a „spare”:
         const documentMock = (() => ({
-            querySelector: (selector) => ({ innerHTML: null,}),
+            querySelector: (selector) => ({ innerHTML: null, }),
         }))();
 
         const Formatter = (function (doc) {
