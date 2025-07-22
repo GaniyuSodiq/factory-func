@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Module Pattern</title>
 </head>
+
 <p id="target"></p>
 
 <body>
@@ -136,7 +137,7 @@
         //     return { makeUpperCase, writeToDom }
         // })()
 
-        // Formatter.writeToDom("#target", "Hello Manager")
+        // Formatter.writeToDom("#target", "Hello Manager") // Hello Manager - on dom
 
         // It works out of the box (assuming that we have an element with id target in our DOM). 
         // Sounds great, but document is available only when the DOM is accessible.
@@ -146,6 +147,10 @@
         // One of the options is to check whether document exists.
         // const writeToDom = (selector, message) => {
         //     if (!!document && "querySelector" in document) {
+        //          "In JavaScript, the !! operator is a common idiom used to explicitly convert a...
+        //          ... value to its boolean equivalent. 
+        //          It achieves this by applying the logical NOT operator (!) twice.""
+        //
         //         document.querySelector(selector).textContent = message
         //     }
         // }
@@ -155,7 +160,41 @@
         // // No, of course not. 
         // // We can declare our module’s dependencies and inject them as we go.
 
-        const Formatter = (function () {
+        // const Formatter = (function (doc) {
+        //     const log = (message) => console.log(`[${Date.now()}] Logger: ${message}`)
+
+        //     const makeUpperCase = (text) => {
+        //         log("Making Upper Case")
+        //         return text.toUpperCase()
+        //     }
+
+        //     const writeToDom = (selector, message) => {
+        //         if (!!doc && "querySelector" in doc) { // !! is confirm the check - code will work if nt there
+        //             doc.querySelector(selector).textContent = message
+        //         }
+        //     }
+
+        //     return { makeUpperCase, writeToDom }
+        // })(document)
+
+        // Formatter.writeToDom("#target", "Hello Manager Sodiq") // Hello Manager Sodiq - on dom
+
+        // Let’s follow it step by step. At the top, there is an argument to our function. 
+        // Then, it is used in writeToDOM method, instead our document.
+        // In the end, right in the last line, we are adding document.
+        // Why? Those are the arguments our module will be invoked with.
+        // Why I changed the argument name in the module? I don’t like to shadow variables.
+
+        // This is a great opportunity for testing, of course. 
+        // Now, rather than relying on whether our testing tools have 
+        // DOM simulator or something similar, we can insert a mock. 
+        // But we need to insert it during our definition, not later. 
+        // This is fairly simple, you just need to write a mock and place is as a „spare”:
+        const documentMock = (() => ({
+            querySelector: (selector) => ({ innerHTML: null,}),
+        }))();
+
+        const Formatter = (function (doc) {
             const log = (message) => console.log(`[${Date.now()}] Logger: ${message}`)
 
             const makeUpperCase = (text) => {
@@ -164,11 +203,15 @@
             }
 
             const writeToDom = (selector, message) => {
-                document.querySelector(selector).textContent = message
+                if (!!doc && "querySelector" in doc) { // !! is confirm the check - code will work if nt there
+                    doc.querySelector(selector).textContent = message
+                }
             }
 
             return { makeUpperCase, writeToDom }
-        })()
+        })(document || documentMock)
+
+        Formatter.writeToDom("#target", "Hello Manager Sodiq") // Hello Manager Sodiq - on dom
 
     </script>
 </body>
