@@ -6,10 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Module Pattern</title>
 </head>
-
-<p id="target"></p>
-
 <body>
+    <p id="target"></p>
     <script>
 
         // 1⭐⭐⭐ A module is a construct somewhat similar to a singleton class. 
@@ -219,7 +217,7 @@
         // }
         // And this pretty much takes care of everything, but I don’t like it. 
         // Now the module really depends on something from the outside. 
-        // It’s like "I will go only if my friend will go too” scenario. It has to be like this?
+        // It’s like "I will go only if my friend will go too” scenario. Does it has to be like this?
         // // No, of course not. 
 
 
@@ -254,9 +252,11 @@
         // Now, rather than relying on whether our testing tools have ...
         // ...DOM simulator or something similar, we can insert a mock. 
         // But we need to insert it during our definition, not later. 
-        // This is fairly simple, you just need to write a mock and place is as a „spare”:
+        // This is fairly simple, you just need to write a mock and place is as a "spare”:
         const documentMock = (() => ({
-            querySelector: (selector) => ({ innerHTML: null, }),
+            querySelector: (selector) => (
+                { innerHTML: null, }
+            ),
         }))();
 
         const Formatter = (function (doc) {
